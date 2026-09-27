@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المراجعة النهائية | مناهج البحث العلمي</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== شاشة التحميل ===================== -->
+<div id="loader">
+  <div class="loader-spinner"></div>
+</div>
+
+<!-- ===================== الرأس / التنقل ===================== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand" onclick="goHome()">
+      <span class="brand-icon">📚</span>
+      <span class="brand-text">المراجعة النهائية</span>
+    </div>
+    <button id="backBtn" class="btn-back" onclick="goHome()" style="display:none;">
+      <span>→</span> الرئيسية
+    </button>
+  </div>
+</header>
+
+<!-- ===================== المحتوى الرئيسي ===================== -->
+<main id="app">
+
+  <!-- ---------- الصفحة الرئيسية ---------- -->
+  <section id="view-home" class="view active">
+    <div class="hero">
+      <h1>المراجعة النهائية</h1>
+      <p class="subtitle">مراجعة تفاعلية شاملة استعداداً للاختبار النهائي</p>
+    </div>
+
+    <h2 class="section-title">الملازم الدراسية</h2>
+    <div id="lecturesGrid" class="cards-grid">
+      <!-- تُبنى ديناميكياً من script.js -->
+    </div>
+
+    <h2 class="section-title">ورقة البحث</h2>
+    <div id="abstractGrid" class="cards-grid">
+      <!-- تُبنى ديناميكياً من script.js -->
+    </div>
+  </section>
+
+  <!-- ---------- صفحة اختيار الملزمة (ملخص / اختبار) ---------- -->
+  <section id="view-lecture" class="view">
+    <div class="lecture-header">
+      <h1 id="lectureTitle"></h1>
+      <p id="lectureDesc" class="subtitle"></p>
+    </div>
+    <div class="choice-grid">
+      <div class="choice-card" onclick="openSummary()">
+        <div class="choice-icon">📖</div>
+        <h3>ملخص الملزمة</h3>
+        <p>مراجعة شاملة وسهلة الفهم لكل المفاهيم</p>
+      </div>
+      <div class="choice-card" onclick="openQuizModes()">
+        <div class="choice-icon">📝</div>
+        <h3>اختبار الملزمة</h3>
+        <p>أسئلة تفاعلية Multiple Choice بمستويات صعوبة متدرجة</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- صفحة الملخص ---------- -->
+  <section id="view-summary" class="view">
+    <div class="summary-header">
+      <button class="btn-mini" onclick="backToLecture()">→ رجوع</button>
+      <h1 id="summaryTitle"></h1>
+    </div>
+    <div id="summaryContent" class="summary-content">
+      <!-- يُبنى ديناميكياً -->
+    </div>
+  </section>
+
+  <!-- ---------- صفحة اختيار وضع الاختبار ---------- -->
+  <section id="view-quizmodes" class="view">
+    <div class="summary-header">
+      <button class="btn-mini" onclick="backToLecture()">→ رجوع</button>
+      <h1>اختر وضع الاختبار</h1>
+    </div>
+    <div class="quiz-modes-grid" id="quizModesGrid">
+      <!-- يُبنى ديناميكياً -->
+    </div>
+  </section>
+
+  <!-- ---------- صفحة الاختبار التفاعلي ---------- -->
+  <section id="view-quiz" class="view">
+    <div class="quiz-topbar">
+      <button class="btn-mini" onclick="exitQuiz()">✕ إنهاء</button>
+      <div class="quiz-progress-wrap">
+        <div class="quiz-progress-bar"><div id="quizProgressFill" class="quiz-progress-fill"></div></div>
+        <span id="quizProgressText" class="quiz-progress-text"></span>
+      </div>
+    </div>
+
+    <div id="quizCard" class="quiz-card">
+      <span id="quizDifficultyBadge" class="difficulty-badge"></span>
+      <h2 id="quizQuestion" class="quiz-question"></h2>
+      <div id="quizOptions" class="quiz-options"></div>
+      <div id="quizExplanation" class="quiz-explanation" style="display:none;"></div>
+      <button id="quizNextBtn" class="btn-primary" style="display:none;" onclick="nextQuestion()">السؤال التالي ←</button>
+    </div>
+  </section>
+
+  <!-- ---------- صفحة نتيجة الاختبار ---------- -->
+  <section id="view-result" class="view">
+    <div class="result-card">
+      <div id="resultEmoji" class="result-emoji">🎯</div>
+      <h1 id="resultLevel" class="result-level"></h1>
+      <div class="result-score-circle">
+        <span id="resultPercent">0%</span>
+      </div>
+      <div class="result-stats">
+        <div class="stat-box stat-correct">
+          <span id="resultCorrect">0</span>
+          <label>إجابات صحيحة</label>
+        </div>
+        <div class="stat-box stat-wrong">
+          <span id="resultWrong">0</span>
+          <label>إجابات خاطئة</label>
+        </div>
+        <div class="stat-box">
+          <span id="resultTotal">0</span>
+          <label>إجمالي الأسئلة</label>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="btn-primary" onclick="retryQuiz()">🔄 إعادة المحاولة</button>
+        <button class="btn-secondary" onclick="backToLecture()">↩ العودة للملزمة</button>
+        <button class="btn-secondary" onclick="goHome()">🏠 الرئيسية</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  <p>منصة مذاكرة تفاعلية — إعداد ذاتي للاستعداد للاختبار النهائي</p>
+</footer>
+
+<!-- ===================== ملفات البيانات ===================== -->
+<script src="data/lecture1.js"></script>
+<script src="data/lecture2.js"></script>
+<script src="data/abstract.js"></script>
+<script src="data/questions1.js"></script>
+<script src="data/questions2.js"></script>
+<script src="data/questionsAbstract.js"></script>
+
+<!-- ===================== منطق الموقع ===================== -->
+<script src="script.js"></script>
+</body>
+</html>
